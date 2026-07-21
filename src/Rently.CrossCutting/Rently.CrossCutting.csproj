@@ -1,0 +1,6 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!-- Código compartilhado entre camadas: exceções, constantes, extensões e contratos genéricos. -->
+  <!-- Não referencia nenhum outro projeto (é a base da pirâmide de dependências). -->
+
+</Project>

@@ -1,0 +1,8 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!-- Camada de Domínio (DDD): entidades, value objects, aggregates, domain events e interfaces de repositório. -->
+  <ItemGroup>
+    <ProjectReference Include="..\Rently.CrossCutting\Rently.CrossCutting.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,10 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!-- Camada de Aplicação (CQRS): handlers de comandos/queries, DTOs e validadores. -->
+  <!-- Depende de Domain e CrossCutting. Não referencia Infrastructure nem Api. -->
+  <ItemGroup>
+    <ProjectReference Include="..\Rently.Domain\Rently.Domain.csproj" />
+    <ProjectReference Include="..\Rently.CrossCutting\Rently.CrossCutting.csproj" />
+  </ItemGroup>
+
+</Project>

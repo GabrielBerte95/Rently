@@ -1,0 +1,49 @@
+// =====================================================================
+//  Rently — Design System / Paleta base
+//  Tema principal em tons de AZUL PETRÓLEO.
+//  Apenas variáveis de cor/estilo globais — sem estilização de componentes.
+// =====================================================================
+
+// --- Escala de azul petróleo ---
+$petrol-900: #06282e;
+$petrol-800: #0a3a42;
+$petrol-700: #0e4b56;
+$petrol-600: #135d6b;
+$petrol-500: #1b7a8c; // cor primária
+$petrol-400: #3a97a8;
+$petrol-300: #6fb6c3;
+$petrol-200: #a7d4dd;
+$petrol-100: #d7ecf0;
+$petrol-050: #eef7f9;
+
+// --- Papéis semânticos ---
+$color-primary:        $petrol-500;
+$color-primary-dark:   $petrol-700;
+$color-primary-light:  $petrol-300;
+$color-accent:         $petrol-400;
+$color-surface:        #ffffff;
+$color-background:     $petrol-050;
+$color-text:           $petrol-900;
+$color-text-muted:     $petrol-600;
+$color-border:         $petrol-200;
+
+// --- Feedback ---
+$color-success: #2e7d5b;
+$color-warning: #b8860b;
+$color-danger:  #b3352e;
+
+// --- CSS custom properties (consumíveis em runtime pelos componentes) ---
+:root {
+  --rently-primary: #{$color-primary};
+  --rently-primary-dark: #{$color-primary-dark};
+  --rently-primary-light: #{$color-primary-light};
+  --rently-accent: #{$color-accent};
+  --rently-surface: #{$color-surface};
+  --rently-background: #{$color-background};
+  --rently-text: #{$color-text};
+  --rently-text-muted: #{$color-text-muted};
+  --rently-border: #{$color-border};
+  --rently-success: #{$color-success};
+  --rently-warning: #{$color-warning};
+  --rently-danger: #{$color-danger};
+}

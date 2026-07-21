@@ -1,0 +1,12 @@
+# Contexto de build da imagem do backend (contexto = raiz do repositório).
+**/bin/
+**/obj/
+**/*.user
+frontend/
+docker/
+docs/
+tests/
+.vs/
+.git/
+.gitignore
+README.md

@@ -1,0 +1,203 @@
+PLANO DE IMPLEMENTACAO - RENTLY (GERENCIADOR DE ALUGUEIS)
+FASE ZERO - FUNDACAO DO PROJETO
+============================================================
+
+OBJETIVO DA FASE
+------------------------------------------------------------
+Estabelecer a fundacao estrutural do projeto Rently: organizar a
+solution, criar e organizar os projetos, diretorios e pastas do
+backend e do frontend, seguindo as decisoes arquiteturais ja
+definidas (monolito modular, DDD, CQRS, .NET 10, Angular 22).
+Nesta fase nao havera implementacao de regras de negocio, apenas
+esqueleto, convencoes e infraestrutura basica do repositorio.
+Nao serao criados projetos de teste, mas a estrutura devera
+permitir sua inclusao futura sem retrabalho.
+
+------------------------------------------------------------
+1. ESTRUTURA GERAL DO REPOSITORIO
+------------------------------------------------------------
+1.1. Criar repositorio raiz do projeto "Rently" com controle de
+     versao Git.
+1.2. Definir estrutura de pastas de alto nivel:
+     /backend
+     /frontend
+     /docs
+     /docker
+1.3. Criar arquivo .gitignore combinado para .NET e Angular.
+1.4. Criar README.md inicial descrevendo o projeto, stack e
+     instrucoes basicas de setup local.
+1.5. Definir arquivo docker-compose.yml na raiz (ou em /docker)
+     para orquestrar backend, frontend e SQL Server em ambiente
+     de desenvolvimento local.
+
+------------------------------------------------------------
+2. BACKEND (.NET 10) - ORGANIZACAO DA SOLUTION
+------------------------------------------------------------
+2.1. Criar a Solution principal: Rently.sln, na pasta /backend.
+
+2.2. Estrutura de pastas e projetos, seguindo separacao por
+     camadas (DDD) e preparando terreno para modularizacao
+     vertical (monolito modular):
+
+     /backend
+       /src
+         /Rently.Api
+             - Projeto de entrada (Web API), responsavel por
+               hospedar os endpoints HTTP, configuracao de
+               middlewares, autenticacao JWT, Swagger/OpenAPI,
+               injecao de dependencia e bootstrap da aplicacao.
+
+         /Rently.Application
+             - Camada de aplicacao. Casos de uso, handlers de
+               comandos e queries (CQRS), DTOs de entrada/saida,
+               interfaces de servicos de aplicacao, validadores.
+             - Organizar subpastas por modulo de negocio (ex.:
+               Imoveis, Contratos, Locatarios, Usuarios), cada
+               uma com subpastas Commands e Queries.
+
+         /Rently.Domain
+             - Camada de dominio (DDD). Entidades, Value Objects,
+               Aggregates, Domain Events, interfaces de
+               repositorio, regras de negocio puras.
+             - Organizar subpastas por modulo/bounded context
+               (ex.: Imoveis, Contratos, Locatarios, Usuarios),
+               preparando a futura separacao vertical do
+               monolito modular.
+
+         /Rently.Infrastructure
+             - Implementacoes concretas: Entity Framework Core
+               (DbContext, Configurations, Migrations),
+               repositorios concretos, autenticacao/JWT,
+               integracoes externas, servicos de infraestrutura
+               (ex.: envio de e-mail, storage de arquivos).
+             - Subpasta /Persistence para o DbContext e
+               Migrations (code-first).
+             - Subpasta /Security para configuracao de JWT.
+
+         /Rently.CrossCutting (ou Rently.Shared)
+             - Codigo compartilhado entre camadas: excecoes
+               customizadas, constantes, extensoes, contratos
+               genericos, configuracoes comuns.
+
+2.3. Convencoes e configuracoes iniciais:
+     - Definir Directory.Build.props para versao do C#,
+       nullable enable, warnings como erro (se aplicavel).
+     - Configurar appsettings.json, appsettings.Development.json
+       e appsettings.Production.json (sem segredos reais).
+     - Configurar Connection String do SQL Server via appsettings
+       + variaveis de ambiente/secrets em desenvolvimento.
+     - Configurar EF Core com padrao code-first e criar a
+       primeira migration vazia (InitialCreate) apenas para
+       validar o pipeline de migrations.
+     - Configurar autenticacao JWT no pipeline (esqueleto):
+       middleware de autenticacao/autorizacao ativo, exigindo
+       token valido em todos os endpoints por padrao.
+     - Adicionar Dockerfile para Rently.Api (multi-stage build).
+     - Preparar estrutura de pastas para que projetos de teste
+       (ex.: Rently.UnitTests, Rently.IntegrationTests) possam
+       ser adicionados futuramente sem alterar a estrutura
+       existente (sem cria-los agora).
+
+2.4. Adicionar os projetos a Solution (Rently.sln) e configurar
+     as referencias entre eles respeitando a direcao de
+     dependencia do DDD:
+     Api -> Application -> Domain
+     Infrastructure -> Application e Domain
+     CrossCutting referenciado por todos.
+
+------------------------------------------------------------
+3. FRONTEND (ANGULAR 22) - ORGANIZACAO DO WORKSPACE
+------------------------------------------------------------
+3.1. Criar o workspace Angular na pasta /frontend, versao 22,
+     com o projeto principal "rently".
+
+3.2. Estrutura de pastas dentro de /frontend/src/app:
+
+     /core
+         - Servicos singleton (ex.: autenticacao, interceptors
+           HTTP para o token JWT, tratamento global de erros),
+           guards de rota, modelos/interfaces globais.
+
+     /shared
+         - Componentes, diretivas e pipes reutilizaveis em toda
+           a aplicacao (ex.: botoes, inputs, modais, loaders).
+         - Definicao inicial do design system/paleta de cores
+           em tons de azul petroleo (variaveis SCSS/tema).
+
+     /features
+         - Um subdiretorio por modulo funcional de negocio (ex.:
+           imoveis, contratos, locatarios, autenticacao), cada
+           um organizado internamente por componentes
+           standalone/paginas, seguindo o principio de
+           componentizacao sempre que possivel.
+
+     /layout
+         - Componentes estruturais da aplicacao (header, sidebar,
+           footer, layout autenticado x layout publico).
+
+3.3. Configuracoes iniciais do projeto Angular:
+     - Definir tema/paleta de cores (tons de azul petroleo) em
+       variaveis globais de estilo (SCSS).
+     - Configurar roteamento base (rotas publicas e privadas,
+       guard de autenticacao).
+     - Configurar interceptor HTTP para anexar o token JWT as
+       requisicoes e tratar respostas 401/403.
+     - Configurar ambiente (environment.ts / environment.prod.ts)
+       com a URL base da API.
+     - Avaliar e configurar RxJS apenas nos pontos onde for
+       necessario/util (ex.: streams de estado, debounce em
+       buscas), sem uso forcado.
+     - Adicionar Dockerfile para o frontend (build de producao
+       servido via Nginx, por exemplo).
+     - Preparar estrutura para inclusao futura de testes
+       (unitarios e e2e) sem criar os projetos/arquivos agora.
+
+------------------------------------------------------------
+4. AMBIENTE DE DESENVOLVIMENTO/TESTES (DOCKER)
+------------------------------------------------------------
+4.1. Criar docker-compose para ambiente local contendo:
+     - Servico do backend (Rently.Api)
+     - Servico do frontend (Rently)
+     - Servico do SQL Server
+4.2. Definir variaveis de ambiente e volumes necessarios
+     (persistencia do banco, hot-reload se aplicavel).
+4.3. Validar subida completa do ambiente local via
+     docker-compose up, garantindo comunicacao entre frontend,
+     backend e banco de dados.
+
+------------------------------------------------------------
+5. PREPARACAO PARA ORQUESTRACAO EM NUVEM (KUBERNETES)
+------------------------------------------------------------
+5.1. Criar pasta /docs com documento inicial descrevendo a
+     visao de implantacao futura em Kubernetes (sem implementar
+     manifests ainda nesta fase), apenas registrando premissas:
+     - Escalabilidade horizontal do backend.
+     - Separacao de imagens Docker por servico.
+     - Necessidade futura de configuracao de secrets/configmaps
+       para strings de conexao e chaves JWT.
+
+------------------------------------------------------------
+6. CRITERIOS DE CONCLUSAO DA FASE ZERO
+------------------------------------------------------------
+- Solution .NET criada, compilando sem erros, com os projetos
+  Api, Application, Domain, Infrastructure e CrossCutting
+  devidamente referenciados.
+- Workspace Angular criado, buildando sem erros, com as pastas
+  core, shared, features e layout estabelecidas.
+- Autenticacao JWT configurada no backend, bloqueando acesso a
+  endpoints sem token valido (mesmo que ainda nao existam
+  endpoints de negocio).
+- EF Core configurado com ao menos uma migration inicial
+  aplicada ao SQL Server.
+- Docker Compose subindo backend, frontend e banco de dados
+  com sucesso em ambiente local.
+- Repositorio Git organizado, com README e .gitignore
+  configurados.
+- Nenhum projeto de teste criado nesta fase, porem a estrutura
+  de pastas permite sua inclusao futura sem reestruturacao.
+
+============================================================
+FIM DA FASE ZERO
+As demais fases serao descritas e planejadas manualmente,
+conforme o andamento do projeto.
+============================================================

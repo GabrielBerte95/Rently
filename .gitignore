@@ -1,0 +1,57 @@
+# ===========================
+#  .NET / C# build artifacts
+# ===========================
+bin/
+obj/
+[Bb]in/
+[Oo]bj/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+project.lock.json
+artifacts/
+[Dd]ebug/
+[Rr]elease/
+publish/
+
+# .NET tooling / IDE
+.vs/
+*.rsuser
+*.userprefs
+
+# EF Core (keep migrations code, ignore generated bundles)
+*.dbmdl
+*.dbproj.schemaview
+
+# ===========================
+#  Angular / Node artifacts
+# ===========================
+node_modules/
+dist/
+.angular/
+tmp/
+out-tsc/
+bazel-out/
+
+# Angular test / coverage
+coverage/
+*.lcov
+.nyc_output/
+
+# ===========================
+#  Environment / secrets
+# ===========================
+.env
+.env.local
+*.env.local
+appsettings.*.local.json
+
+# ===========================
+#  Logs & OS files
+# ===========================
+*.log
+npm-debug.log*
+yarn-error.log*
+.DS_Store
+Thumbs.db

@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <!-- Ponto de entrada Web API: endpoints, middlewares, autenticação JWT e bootstrap. -->
+  <!-- Composition root: referencia Application (regra DDD) e Infrastructure (registro de EF Core/JWT). -->
+  <ItemGroup>
+    <ProjectReference Include="..\Rently.Application\Rently.Application.csproj" />
+    <ProjectReference Include="..\Rently.Infrastructure\Rently.Infrastructure.csproj" />
+    <ProjectReference Include="..\Rently.CrossCutting\Rently.CrossCutting.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="10.0.10" />
+  </ItemGroup>
+
+</Project>

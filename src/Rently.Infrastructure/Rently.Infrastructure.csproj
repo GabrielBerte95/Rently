@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!-- Camada de Infraestrutura: EF Core (DbContext, Configurations, Migrations), repositórios concretos e segurança (JWT). -->
+  <!-- Depende de Application, Domain e CrossCutting. -->
+  <ItemGroup>
+    <ProjectReference Include="..\Rently.Application\Rently.Application.csproj" />
+    <ProjectReference Include="..\Rently.Domain\Rently.Domain.csproj" />
+    <ProjectReference Include="..\Rently.CrossCutting\Rently.CrossCutting.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="10.0.10" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="10.0.10">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+  </ItemGroup>
+
+</Project>

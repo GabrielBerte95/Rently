@@ -1,0 +1,25 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/Rently.CrossCutting/Rently.CrossCutting.csproj" />
+    <Project Path="src/Rently.Domain/Rently.Domain.csproj" />
+    <Project Path="src/Rently.Application/Rently.Application.csproj" />
+    <Project Path="src/Rently.Infrastructure/Rently.Infrastructure.csproj" />
+    <Project Path="src/Rently.Api/Rently.Api.csproj" />
+  </Folder>
+  <Folder Name="/frontend/">
+    <File Path="frontend/angular.json" />
+    <File Path="frontend/package.json" />
+    <File Path="frontend/tsconfig.json" />
+    <File Path="frontend/Dockerfile" />
+    <File Path="frontend/nginx.conf" />
+    <File Path="frontend/README.md" />
+  </Folder>
+  <Folder Name="/solution-items/">
+    <File Path="README.md" />
+    <File Path=".gitignore" />
+    <File Path=".dockerignore" />
+    <File Path="Directory.Build.props" />
+    <File Path="docker/docker-compose.yml" />
+    <File Path="docker/.env.example" />
+  </Folder>
+</Solution>
